@@ -43,14 +43,12 @@ class Stack {
 
   toArray() {
     let newArray = [];
-    if (this.currentStackLength === 0) {
-      return newArray;
-    } else {
-      for (let i = 1; i < this.currentStackLength + 1; i++) {
-        newArray.push(this.newStack[i]);
-      }
-      return newArray;
+    while (this.currentStackLength !== 0) {
+      newArray.push(this.pop());
     }
+    newArray = newArray.reverse();
+    newArray.forEach(elem => this.push(elem));
+    return newArray;
   }
 
   static fromIterable(iterable) {
@@ -70,5 +68,4 @@ class Stack {
       throw new Error('An object is not iterable!')
     }
   }
-
 };
