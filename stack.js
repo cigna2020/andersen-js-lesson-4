@@ -1,9 +1,9 @@
 class Stack {
 
-  constructor(maxStackLength = 10) {
+  constructor(maxStackLength = 10, newStack = {}, currentStackLength = 0) {
     this.maxStackLength = maxStackLength;
-    this.newStack = {};
-    this.currentStackLength = 0;
+    this.newStack = newStack;
+    this.currentStackLength = currentStackLength;
     if (this.maxStackLength < 0 || typeof (this.maxStackLength) !== 'number' || Object.is(this.maxStackLength, NaN)) throw new Error('The argument should be a number > 0!')
   }
 
@@ -54,7 +54,6 @@ class Stack {
   static fromIterable(iterable) {
     if (typeof (iterable[Symbol.iterator]) === 'function') {
 
-      this.maxStackLength = iterable.length;
       let newStackCopy = {};
       let currentStackLengthCopy = 0;
 
@@ -62,8 +61,7 @@ class Stack {
         currentStackLengthCopy++
         newStackCopy[currentStackLengthCopy] = iterable[i];
       }
-      this.newStack = newStackCopy;
-      this.currentStackLength = currentStackLengthCopy;
+      return new this(this.maxStackLength = iterable.length, this.newStack = newStackCopy, this.currentStackLength = currentStackLengthCopy);
     } else {
       throw new Error('An object is not iterable!')
     }
